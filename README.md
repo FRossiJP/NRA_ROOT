@@ -1,2 +1,4 @@
 # NRA_ROOT
-Test repository where to collaborate on ROOT coding
+Repository where to collaborate on ROOT coding.
+
+If you do any changes, please create a new branch first!
