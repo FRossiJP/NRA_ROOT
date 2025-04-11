@@ -84,7 +84,7 @@
 
 using namespace std;
 using namespace TMath;
-//namespace fs = std::filesystem;
+namespace fs = std::filesystem;
 
 //const TString MainDir = "/home/ndg/Fabi/JFY2024/01_ROOT/202504_Optimization";
 const TString DataDir = "/list";
@@ -189,7 +189,7 @@ void Plot_PolyFIT_250401(char *file, Double_t Ql_MIN, Double_t Ql_MAX)
 
 
 // ******************************* PLOT **************************************
-
+	string filestr = file;
 	TString FName = file, SearchUnderscore = "_", SearchSlash = "/", SearchTerm = ".root";
 	Int_t delim[delMAX], delimSize = 0;
 	
