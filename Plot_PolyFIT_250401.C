@@ -202,7 +202,12 @@ void Plot_PolyFIT_250401(char *file, Double_t Ql_MIN, Double_t Ql_MAX)
 		}
 	}
 	Int_t RunNumber, RunColor;
-	RunNumber = stoi(FName(delim[2]+1,delim[3]-delim[2]-1));
+	size_t lastSlashPos = filestr.find_last_of('/');
+        string fileName = filestr.substr(lastSlashPos + 1);
+        size_t dotPos = fileName.find('.');
+        string numberStr = fileName.substr(0, dotPos);
+        cout<<numberStr<<endl;
+        RunNumber = stoi(numberStr);
 	if (PrintInpFileON == 1) {cout << Form("READING the file: %s", FName.Data()) << endl;}
 	
 	TFile *fin = TFile::Open(FName);
