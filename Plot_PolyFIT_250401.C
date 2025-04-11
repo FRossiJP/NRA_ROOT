@@ -28,7 +28,7 @@
 		**********************************************************************
 */
 
-//#include <filesystem>
+#include <filesystem>
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -84,9 +84,9 @@
 
 using namespace std;
 using namespace TMath;
-//namespace fs = std::filesystem;
+namespace fs = std::filesystem;
 
-const TString MainDir = "/home/ndg/Fabi/JFY2024/01_ROOT/202504_Optimization";
+//const TString MainDir = "/home/ndg/Fabi/JFY2024/01_ROOT/202504_Optimization";
 const TString DataDir = "/list";
 //const TString ProgramDir = "/progs";
 const TString RootDir = "/ROOT";
@@ -144,7 +144,7 @@ const Int_t MaxSCV = 3;
 
 void Plot_PolyFIT_250401(char *file, Double_t Ql_MIN, Double_t Ql_MAX)
 {
-//	const TString MainDir = string(fs::current_path());
+	const TString MainDir = string(fs::current_path());
 	gStyle->SetCanvasColor(0);
 	gStyle->SetFrameBorderMode(0);
 	gStyle->SetFrameBorderSize(0);
@@ -178,7 +178,7 @@ void Plot_PolyFIT_250401(char *file, Double_t Ql_MIN, Double_t Ql_MAX)
 		cout << Form("  5) Plot:  %s%s/Th%04.0f%s/[Run#]_[DetType]_[HistType].png", MainDir.Data(), RootDir.Data(), Ql_MIN, RootPlotDir.Data()) << endl;
 		cout << "**********************************************************************" << endl << endl;
 	}
-/*
+
 	fs::path dir = Form("%s%s/Th%04.0f%s",MainDir.Data(), RootDir.Data(), Ql_MIN, RootPlotDir.Data());
         if (!fs::exists(dir)) {
                 fs::create_directory(dir);
@@ -186,10 +186,10 @@ void Plot_PolyFIT_250401(char *file, Double_t Ql_MIN, Double_t Ql_MAX)
         } else {
                 std::cout << "already mkdir" << dir << std::endl;
         }
-*/
+
 
 // ******************************* PLOT **************************************
-
+	string filestr = file;
 	TString FName = file, SearchUnderscore = "_", SearchSlash = "/", SearchTerm = ".root";
 	Int_t delim[delMAX], delimSize = 0;
 	
@@ -202,7 +202,12 @@ void Plot_PolyFIT_250401(char *file, Double_t Ql_MIN, Double_t Ql_MAX)
 		}
 	}
 	Int_t RunNumber, RunColor;
-	RunNumber = stoi(FName(delim[2]+1,delim[3]-delim[2]-1));
+	size_t lastSlashPos = filestr.find_last_of('/');
+        string fileName = filestr.substr(lastSlashPos + 1);
+        size_t dotPos = fileName.find('.');
+        string numberStr = fileName.substr(0, dotPos);
+        cout<<numberStr<<endl;
+        RunNumber = stoi(numberStr);
 	if (PrintInpFileON == 1) {cout << Form("READING the file: %s", FName.Data()) << endl;}
 	
 	TFile *fin = TFile::Open(FName);
@@ -426,7 +431,7 @@ void Plot_PolyFIT_250401(char *file, Double_t Ql_MIN, Double_t Ql_MAX)
 /*	TString ofileFIT = Form("%s%s/Th%04.0f/PSD_TH2D_%04d.root", MainDir.Data(), RootDir.Data(), Ql_MIN, RunNumber);
 	TFile *foutFIT = new TFile(ofileFIT,"recreate");*/
 	TF1 *gauG[ThSTE][MAXnumChannel], *gauN[ThSTE][MAXnumChannel], *polG[ThSTE][MAXnumChannel], *polN[ThSTE][MAXnumChannel], *g1[ThSTE][MAXnumChannel], *n1[ThSTE][MAXnumChannel], *total[ThSTE][MAXnumChannel], *n_GS20[MAXnumChannel];
-	Double_t par1[ThSTE][MAXnumChannel][MAXpar], par2[ThSTE][MAXnumChannel][MAXpar], par[ThSTE][MAXnumChannel][MAXparameter];
+	Double_t /*par1[ThSTE][MAXnumChannel][MAXpar], par2[ThSTE][MAXnumChannel][MAXpar],*/ par[ThSTE][MAXnumChannel][MAXparameter];
 	Double_t g1MIN[MAXnumChannel][ThSTE] = {
 		{0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08},  // mini_GS20
 		{0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15},  // H01
@@ -647,7 +652,7 @@ void Plot_PolyFIT_250401(char *file, Double_t Ql_MIN, Double_t Ql_MAX)
 //			legPSD[i]->AddEntry(h_Qs[i],Form("%04d %s", RunNumber, ChLabel[i].Data()),"l");
 			legPSD[i]->Draw();
 			
-			if ((currentType.Contains("Plastic") && (CalculateFOM == 1))
+			if (currentType.Contains("Plastic") && (CalculateFOM == 1))
 			{
 				for (int j=0; j<MAXRunNumber; j++)
 				{
