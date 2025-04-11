@@ -28,7 +28,7 @@
 		**********************************************************************
 */
 
-//#include <filesystem>
+#include <filesystem>
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -86,7 +86,7 @@ using namespace std;
 using namespace TMath;
 //namespace fs = std::filesystem;
 
-const TString MainDir = "/home/ndg/Fabi/JFY2024/01_ROOT/202504_Optimization";
+//const TString MainDir = "/home/ndg/Fabi/JFY2024/01_ROOT/202504_Optimization";
 const TString DataDir = "/list";
 //const TString ProgramDir = "/progs";
 const TString RootDir = "/ROOT";
@@ -144,7 +144,7 @@ const Int_t MaxSCV = 3;
 
 void Plot_PolyFIT_250401(char *file, Double_t Ql_MIN, Double_t Ql_MAX)
 {
-//	const TString MainDir = string(fs::current_path());
+	const TString MainDir = string(fs::current_path());
 	gStyle->SetCanvasColor(0);
 	gStyle->SetFrameBorderMode(0);
 	gStyle->SetFrameBorderSize(0);
@@ -178,7 +178,7 @@ void Plot_PolyFIT_250401(char *file, Double_t Ql_MIN, Double_t Ql_MAX)
 		cout << Form("  5) Plot:  %s%s/Th%04.0f%s/[Run#]_[DetType]_[HistType].png", MainDir.Data(), RootDir.Data(), Ql_MIN, RootPlotDir.Data()) << endl;
 		cout << "**********************************************************************" << endl << endl;
 	}
-/*
+
 	fs::path dir = Form("%s%s/Th%04.0f%s",MainDir.Data(), RootDir.Data(), Ql_MIN, RootPlotDir.Data());
         if (!fs::exists(dir)) {
                 fs::create_directory(dir);
@@ -186,7 +186,7 @@ void Plot_PolyFIT_250401(char *file, Double_t Ql_MIN, Double_t Ql_MAX)
         } else {
                 std::cout << "already mkdir" << dir << std::endl;
         }
-*/
+
 
 // ******************************* PLOT **************************************
 
