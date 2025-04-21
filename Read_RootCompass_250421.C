@@ -20,7 +20,6 @@
 #include <sstream>
 #include <sys/stat.h>
 #include <time.h>
- 
 #include "TApplication.h"
 #include "TCanvas.h"
 #include "TString.h"
@@ -61,7 +60,7 @@
 using namespace std;
 using namespace TMath;
 
-const TString MainDir = "/home/ndg/Fabi/JFY2025/202504_Optimization/Compass";
+const TString MainDir = "/home/ndg/Fabi/JFY2025/202504_Optimization/Compass";  //Setting folder location ex. "/home/nra/Lee_ROOT/CoMPASS/20250421/DAQ"
 const TString RunDir = "/run_";
 const TString RawDir = "/RAW";
 const TString PlotDir = "/Plot";
