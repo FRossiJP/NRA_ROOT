@@ -127,28 +127,28 @@ void Read_RootCompass_250421()
 
 // run_1 22Na   run_2 BG
 	TString FName[MAXRunNumber];
-	Int_t RunNum[MAXRunNumber] = {1, 2};
-	FName[0] = Form("%s%s%d%s/HcompassR_run_1_20250421_105024.root", MainDir.Data(), RunDir.Data(), RunNum[0], RawDir.Data());
-	FName[1] = Form("%s%s%d%s/HcompassR_run_2_20250421_115348.root", MainDir.Data(), RunDir.Data(), RunNum[1], RawDir.Data());
+	Int_t RunNum[MAXRunNumber] = {20, 19};
+	FName[0] = Form("%s%s%d%s/HcompassR_run_20_20250421_140616.root", MainDir.Data(), RunDir.Data(), RunNum[0], RawDir.Data());
+	FName[1] = Form("%s%s%d%s/HcompassR_run_19_20250421_124600.root", MainDir.Data(), RunDir.Data(), RunNum[1], RawDir.Data());
 	
 	YMin[0][0] = 0; YMax[0][0] = 30;
-	YMin[0][1] = 0; YMax[0][1] = 1.05e5;
-	YMin[1][0] = 0; YMax[1][0] = 10;
-	YMin[1][1] = 0; YMax[1][1] = 3.e4;
+	YMin[0][1] = 0; YMax[0][1] = 1.00e5;
+	YMin[1][0] = 0; YMax[1][0] = 5;
+	YMin[1][1] = 0; YMax[1][1] = 1.6e4;
 	YMin[MAXRunNumber][0] = 0; YMax[MAXRunNumber][0] = 30;
-	YMin[MAXRunNumber][1] = 0; YMax[MAXRunNumber][1] = 1.05e5;
+	YMin[MAXRunNumber][1] = 0; YMax[MAXRunNumber][1] = 1.00e5;
 	
 	Double_t RealTime[MAXRunNumber][MAXnumChannel] = {
-		{3600.124, 3600.124, 3600.123, 3600.124, 3600.124, 3600.125, 3600.124, 3600.123, 3600.124, 3600.124},
-		{3600.123, 3600.121, 3600.124, 3600.122, 3600.119, 3600.117, 3600.124, 3600.123, 3600.124, 3600.124}
+		{3600.065, 3600.058, 3600.065, 3600.063, 3600.064, 3600.065, 3600.066, 3600.065, 3600.063, 3600.065},
+		{3600.068, 3600.070, 3600.067, 3600.059, 3600.069, 3600.055, 3600.066, 3600.070, 3600.070, 3600.069}
 	}; // seconds
 	Double_t LiveTime[MAXRunNumber][MAXnumChannel] = {
-		{3595.668, 3595.703, 3595.588, 3595.417, 3595.019, 3594.804, 3595.703, 3595.588, 3595.417, 3595.019},
-		{3599.324, 3599.182, 3599.117, 3599.224, 3599.065, 3599.085, 3595.703, 3595.588, 3595.417, 3595.019}
+		{3597.729, 3597.905, 3597.820, 3597.840, 3595.210, 3595.355, 3597.656, 3597.919, 3597.691, 3597.562},
+		{3599.298, 3599.441, 3599.283, 3599.363, 3599.325, 3599.328, 3599.369, 3599.238, 3599.245, 3599.202}
 	}; // seconds
 	
-	TString LegHead[MAXRunNumber+1] = {"run_1: ^{22}Na", "run_2: BG", "run_1 - run_2: ^{22}Na - BG"};
-	TString LegCanvas[MAXRunNumber+1] = {"run1_22Na", "run2_BG", "run1-2_22Na-BG"};
+	TString LegHead[MAXRunNumber+1] = {"run_20: ^{22}Na", "run_19: BG", "run_20 - run_19: ^{22}Na - BG"};
+	TString LegCanvas[MAXRunNumber+1] = {"run20_22Na", "run19_BG", "run20-19_22Na-BG"};
 	TFile *file[MAXRunNumber];
 
 // *************************************************************************************************************************************************** //
@@ -176,12 +176,12 @@ void Read_RootCompass_250421()
 		canv[i] = new TCanvas(Form("canv%d",i), Form("canv%d",i), 1500,1000);
 		canv[i]->SetMargin(0.15,0.025,0.15,0.08);
 		canv[i]->SetGridx(); canv[i]->SetGridy();
-		leg[i] = new TLegend(0.65, 0.80, 0.99, 0.99);
+		leg[i] = new TLegend(0.50, 0.80, 0.99, 0.99);
 		leg[i]->SetMargin(0.40);
 		leg[i]->SetTextSize(0.05);
-		leg[i]->SetNColumns(3);
+		leg[i]->SetNColumns(5);
 		
-		for (int j=0; j<6; j++) // (int j=0; j<MAXnumChannel; j++)
+		for (int j=0; j<MAXnumChannel; j++)
 		{
 			if (PrintINPReadON == 1) {cout << Form("_R_EnergyCH%d@V1730SB_27412",j+1) << endl;}
 			h[i][j] = (TH1D*) gDirectory->Get(Form("Energy/_R_EnergyCH%d@V1730SB_27412",j+1));
@@ -224,13 +224,13 @@ void Read_RootCompass_250421()
 	canv[MAXRunNumber] = new TCanvas(Form("canv%d", MAXRunNumber), Form("canv%d", MAXRunNumber), 1500,1000);
 	canv[MAXRunNumber]->SetMargin(0.15,0.025,0.15,0.08);
 	canv[MAXRunNumber]->SetGridx(); canv[MAXRunNumber]->SetGridy();
-	leg[MAXRunNumber] = new TLegend(0.65, 0.80, 0.99, 0.99);
+	leg[MAXRunNumber] = new TLegend(0.50, 0.80, 0.99, 0.99);
 	leg[MAXRunNumber]->SetMargin(0.40);
-	leg[MAXRunNumber]->SetNColumns(3);
+	leg[MAXRunNumber]->SetNColumns(5);
 	leg[MAXRunNumber]->SetTextSize(0.05);
 	leg[MAXRunNumber]->SetHeader(LegHead[MAXRunNumber],"c");
 
-	for (int j=0; j<6; j++) // (int j=0; j<MAXnumChannel; j++)
+	for (int j=0; j<MAXnumChannel; j++)
 	{
 		h[MAXRunNumber][j] = (TH1D*)h[0][j]->Clone(Form("s%d",j));
 		h[MAXRunNumber][j]->Add(h[1][j],-1);
