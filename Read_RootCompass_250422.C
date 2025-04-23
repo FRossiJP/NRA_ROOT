@@ -5,9 +5,7 @@
 //		Single file -> root -b -q Read_RootCompass_250421.C
 //
 //	Improvements that can be done:
-//		1) Remove the path
-//		2) Read the run# automatically
-//		3) Read-in the real and live time using the .txt3 files
+//		1) Read the run# automatically
 //
 
 #include <iostream>
@@ -328,6 +326,72 @@ void Read_RootCompass_250422()
 			else {h[i][ch]->Draw("hist,same");}
 		}
 		leg[i]->Draw();
+	}
+	
+	cout << "\nAvailable runs:\n";
+	for (int i = 0; i < RunNumber; i++)
+	{
+		cout << Form("  [%d] RUN %d: %s", i, RunNum[i], RunMemo[i].Data()) << endl;
+	}
+	cout << endl;
+	
+	char doBGSub;
+	cout << "Do you want to perform background subtraction? (y/n): ";
+	cin >> doBGSub;
+	
+	while (doBGSub == 'y' || doBGSub == 'Y')
+	{
+		Int_t dataRunNum, bgRunNum;
+		cout << "Enter the DATA run number: ";
+		cin >> dataRunNum;
+		cout << "Enter the BACKGROUND run number: ";
+		cin >> bgRunNum;
+		
+		Int_t dataIdx = -1, bgIdx = -1;
+		for (int i = 0; i < RunNumber; i++)
+		{
+			if (RunNum[i] == dataRunNum) dataIdx = i;
+			if (RunNum[i] == bgRunNum) bgIdx = i;
+		}
+		
+		if (dataIdx == -1 || bgIdx == -1)
+		{
+			cerr << "❌ One or both run numbers not found! Try again." << endl;
+			continue;
+		}
+		TCanvas *cBGSub = new TCanvas(Form("cBGSub_%d_%d", dataIdx, bgIdx), "Background Subtraction", 1500, 1000);
+		cBGSub->SetMargin(0.15, 0.025, 0.15, 0.08);
+		cBGSub->SetGridx(); cBGSub->SetGridy();
+		
+		TLegend *legBG = new TLegend(0.50, 0.80, 0.99, 0.99);
+		legBG->SetMargin(0.40);
+		legBG->SetTextSize(0.05);
+		legBG->SetNColumns(5);
+		legBG->SetHeader(Form("RUN%d - RUN%d", RunNum[dataIdx], RunNum[bgIdx]), "c");
+		
+		for (int ch = 0; ch < MAXnumChannel; ch++) {
+			if (!h[dataIdx][ch] || !h[bgIdx][ch]) continue;
+		
+			// Clone and subtract
+			TH1D* hSub = (TH1D*)h[dataIdx][ch]->Clone(Form("hSub_CH%d", ch));
+			hSub->Add(h[bgIdx][ch], -1);
+			hSub->SetLineColor(ColFile[ch]);
+			hSub->SetLineWidth(3);
+			hSub->GetXaxis()->SetTitle("ADC Channel");
+			hSub->GetYaxis()->SetTitle("Subtracted Counts");
+			hSub->GetXaxis()->SetRangeUser(0, 400);
+			hSub->GetYaxis()->SetRangeUser(YMin[TimeSelect], YMax[TimeSelect]);
+		
+			legBG->AddEntry(hSub, Form("H%02d", ch+1), "l");
+			if (ch == 0) hSub->Draw("hist");
+			else hSub->Draw("hist same");
+		}
+		
+		legBG->Draw();
+		cBGSub->SaveAs(Form("%s/%s/BGSub_Run%d_minus_Run%d.png", MainDir.Data(), PlotDir.Data(), RunNum[dataIdx], RunNum[bgIdx]));
+		
+		cout << "Do you want to subtract another background? (y/n): ";
+		cin >> doBGSub;
 	}
 	
 	for (int i=0; i<RunNumber; i++)
