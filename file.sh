@@ -28,7 +28,7 @@ case $? in
 				#gnome-terminal --tab --title="run$file" -- bash -ic '../../root/root_v6.34.00-rc1.Linux-ubuntu22.04-x86_64-gcc11.4/root/bin/root.exe Plot_PolyFIT_250203.C\(\"$file\",100,60000\); exec bash'
 				export CURRENT_FILE="$file"
 				# gnome-terminal内で環境変数にアクセス				
-				gnome-terminal --tab --title="run$file" -- bash -ic 'export CURRENT_FILE="$CURRENT_FILE";../../root/root_v6.34.00-rc1.Linux-ubuntu22.04-x86_64-gcc11.4/root/bin/root.exe -b -q Plot_PolyFIT_250401.C\(\"$CURRENT_FILE\",100,60000\);exec bash'
+				gnome-terminal --tab --title="run$file" -- bash -ic 'export CURRENT_FILE="$CURRENT_FILE";root -b -q Plot_PolyFIT_250401.C\(\"$CURRENT_FILE\",100,60000\);exec bash'
 
 				echo "-----"
 			done
