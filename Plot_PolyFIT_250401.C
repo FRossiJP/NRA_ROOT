@@ -315,13 +315,13 @@ void Plot_PolyFIT_250401(char *file, Double_t Ql_MIN, Double_t Ql_MAX)
 										  0.60, 0.60, 0.60, 0.60};
 */
 	
-	ifstream finMemo;
+	
 	TString FNameMemo = Form("%s%s/Th%04.0f/2025_RunInfo.txt", MainDir.Data(), RootDir.Data(), Ql_MIN); // "ROOT/Th0100/2025_RunInfo.txt";
 	Int_t CountRun = 0;
 	
 	Int_t temp1, RunNum[MAXRunNumber], temp3, inputQl[MAXRunNumber], temp4, inputQs[MAXRunNumber], inQl, inQs;
 	Double_t temp2, MeasTime[MAXRunNumber], tmeas;
-	finMemo(FNameMemo);
+	ifstream finMemo(FNameMemo);
 	if (!finMemo.is_open()) {
     		std::cerr << "Error opening file: " << FNameMemo << std::endl;
     		return; // エラーコードを返す
