@@ -321,7 +321,7 @@ void Plot_PolyFIT_250401(char *file, Double_t Ql_MIN, Double_t Ql_MAX)
 	
 	Int_t temp1, RunNum[MAXRunNumber], temp3, inputQl[MAXRunNumber], temp4, inputQs[MAXRunNumber], inQl, inQs;
 	Double_t temp2, MeasTime[MAXRunNumber], tmeas;
-	std::ifstream finMemo(FNameMemo);
+	finMemo(FNameMemo);
 	if (!finMemo.is_open()) {
     		std::cerr << "Error opening file: " << FNameMemo << std::endl;
     		return; // エラーコードを返す
