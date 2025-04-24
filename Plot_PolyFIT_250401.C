@@ -249,11 +249,11 @@ void Plot_PolyFIT_250401(char *file, Double_t Ql_MIN, Double_t Ql_MAX)
 	ChLabel[10] = "H10";         ChType[10] = "Plastic";
 	ChLabel[11] = "EJ-270";      ChType[11] = "Li6_Plastic";
 	ChLabel[12] = "Layer_GS20";  ChType[12] = "Li6_Glass";
-	ChLabel[13] = "BF3";         ChType[13] = "Other";
-	ChLabel[14] = "";            ChType[14] = "";
-	ChLabel[15] = "";            ChType[15] = "";
-	ChLabel[16] = "Linac";       ChType[16] = "Beam";
-	ChLabel[17] = "TOTAL";       ChType[17] = "";
+	ChLabel[13] = "Linac";         ChType[13] = "linac";
+	ChLabel[14] = "bf3";            ChType[14] = "bf3";
+	ChLabel[15] = "total";            ChType[15] = "total";
+	ChLabel[16] = "";       ChType[16] = "";
+	ChLabel[17] = "";       ChType[17] = "";
 	// Ql                // Qs                // PSD                     // // Ql-PSD
 	xlbin_tot = 6600;    xsbin_tot = 3280;    xpbin_tot = 512;           // x2lbin_tot = 37000;   ybin_tot = 512;
 	xl_min = 0.0;        xs_min = 0.0;        xp_min = 0.0;              // x2l_min = 0.0;        y_min = 0.0;
