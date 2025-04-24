@@ -179,12 +179,20 @@ void Plot_PolyFIT_250401(char *file, Double_t Ql_MIN, Double_t Ql_MAX)
 		cout << "**********************************************************************" << endl << endl;
 	}
 
+	fs::path dir = Form("%s%s",MainDir.Data(), RootDir.Data());
+        if (!fs::exists(dir)) {
+                fs::create_directory(dir);
+                std::cout << "root dir mkdir now!" << dir << std::endl;
+        } else {
+                std::cout << "rootdir already mkdir" << dir << std::endl;
+        }
+
 	fs::path dir = Form("%s%s/Th%04.0f%s",MainDir.Data(), RootDir.Data(), Ql_MIN, RootPlotDir.Data());
         if (!fs::exists(dir)) {
                 fs::create_directory(dir);
-                std::cout << "mkdir now!" << dir << std::endl;
+                std::cout << "Thxx dir mkdir now!" << dir << std::endl;
         } else {
-                std::cout << "already mkdir" << dir << std::endl;
+                std::cout << "Thxx dir already mkdir" << dir << std::endl;
         }
 
 
