@@ -219,6 +219,10 @@ void Plot_PolyFIT_250401(char *file, Double_t Ql_MIN, Double_t Ql_MAX)
 	if (PrintInpFileON == 1) {cout << Form("READING the file: %s", FName.Data()) << endl;}
 	
 	TFile *fin = TFile::Open(FName);
+	if (fin == nullptr) {
+            std::cerr << "Error: Could not open file: " << FName << std::endl;
+            return 1; // エラーコードを返す
+        }
 	Int_t ch, tof, interval;
 	Double_t ql, qs, psd;
 	TTree *tData = (TTree*)fin->Get("tData");
@@ -317,8 +321,12 @@ void Plot_PolyFIT_250401(char *file, Double_t Ql_MIN, Double_t Ql_MAX)
 	
 	Int_t temp1, RunNum[MAXRunNumber], temp3, inputQl[MAXRunNumber], temp4, inputQs[MAXRunNumber], inQl, inQs;
 	Double_t temp2, MeasTime[MAXRunNumber], tmeas;
-	
-	finMemo.open(FNameMemo);
+	std::ifstream finMemo(FNameMemo);
+	if (!finMemo.is_open()) {
+    		std::cerr << "Error opening file: " << FNameMemo << std::endl;
+    		return 1; // エラーコードを返す
+	}
+	//finMemo.open(FNameMemo);
 	if (PrintReadingMemoON == 1) {cout << Form("#   Run#   MeasTime [s]   input Qs   input Ql") << endl;}
 	while(finMemo >> temp1 >> temp2 >> temp3 >> temp4)
 	{
