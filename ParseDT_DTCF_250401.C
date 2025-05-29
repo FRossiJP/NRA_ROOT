@@ -1,5 +1,5 @@
 //	This macro was created by Rossi Fabiana on 2024-12-17
-//	Last modified on 2025-04-01
+//	Last modified on 2025-05-29
 /*
 	How to run this macro:
 		Single file -> root ParseDT_DTCF_250203.C\(\"ROOT/Th####/[Run#].root\",RefRunNumber\)
@@ -206,7 +206,7 @@ void ParseDT_DTCF_250203(char *file, Int_t RefRunNumber) // , Double_t Threshold
 // ******************************* TOF & DTCF **************************************
 	
 	ifstream finMemo;
-	TString FNameMemo = Form("%s%s/Th%04.0f/2025_RunInfo.txt", MainDir.Data(), RootDir.Data(), Threshold); // "ROOT/Th1000/2025_RunInfo.txt";
+	TString FNameMemo = Form("%s%s/Th%04.0f/2025_RunInfo_Shots.txt", MainDir.Data(), RootDir.Data(), Threshold); // "ROOT/Th1000/2025_RunInfo.txt";
 	Int_t CountRun = 0;
 	
 	//EXPyear = stoi(FNameMemo(59,4)); // stoi(FNameMemo(12,4));
@@ -243,8 +243,8 @@ void ParseDT_DTCF_250203(char *file, Int_t RefRunNumber) // , Double_t Threshold
 	}
 	if (PrintReadingON == 1) {cout << Form("The number of runs done in %4d are %2d", EXPyear, CountRun) << endl << endl;}
 	
-	TString TString ChLabel[MAXnumChannel+1], ChType[MAXnumChannel+1];
-	Int_t Deadtime[MAXnumChannel]; // 2ns
+	TString ChLabel[MAXnumChannel+1], ChType[MAXnumChannel+1];
+	Int_t Deadtime[MAXnumChannel+1]; // 2ns
 	
 	ChLabel[0] = "mini_GS20";    ChType[0] = "Li6_Glass";     Deadtime[0] = 450;
 	ChLabel[1] = "H01";          ChType[1] = "Plastic";       Deadtime[1] = 650;
@@ -261,9 +261,9 @@ void ParseDT_DTCF_250203(char *file, Int_t RefRunNumber) // , Double_t Threshold
 	ChLabel[12] = "Layer_GS20";  ChType[12] = "Li6_Glass";    Deadtime[12] = 450;
 	ChLabel[13] = "BF3";         ChType[13] = "Other";        Deadtime[13] = 450;
 	ChLabel[14] = "";            ChType[14] = "";             Deadtime[14] = 0;
-	ChLabel[15] = "";            ChType[15] = "";             Deadtime[14] = 0;
-	ChLabel[16] = "Linac";       ChType[16] = "Beam";         Deadtime[14] = 0;
-	ChLabel[17] = "TOTAL";       ChType[17] = "";             Deadtime[14] = 0;
+	ChLabel[15] = "";            ChType[15] = "";             Deadtime[15] = 0;
+	ChLabel[16] = "Linac";       ChType[16] = "Beam";         Deadtime[16] = 0;
+	ChLabel[17] = "TOTAL";       ChType[17] = "";             Deadtime[17] = 0;
 	
 	TString FName = file, SearchUnderscore = "_", SearchSlash = "/", SearchTerm = ".root";
 	Int_t delim[delMAX], delimSize = 0;
@@ -346,7 +346,7 @@ void ParseDT_DTCF_250203(char *file, Int_t RefRunNumber) // , Double_t Threshold
 	{
 		// Get the first row of the block (min values)
 		tFit->GetEntry(i); // Min row
-//		TString currentLabel = ChLabel[ch];
+		TString currentLabel = ChLabel[ch];
 		TString currentType = ChType[ch];
 		if (currentType == ("")) // (currentLabel == "")
 		{
